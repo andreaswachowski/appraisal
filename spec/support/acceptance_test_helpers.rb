@@ -10,7 +10,7 @@ module AcceptanceTestHelpers
   include DependencyHelpers
 
   BUNDLER_ENVIRONMENT_VARIABLES = %w(RUBYOPT BUNDLE_PATH BUNDLE_BIN_PATH
-    BUNDLE_GEMFILE)
+                                     BUNDLE_GEMFILE)
 
   included do
     metadata[:type] = :acceptance
@@ -66,6 +66,13 @@ module AcceptanceTestHelpers
 
   def build_gemfile(content)
     write_file 'Gemfile', content.strip_heredoc
+  end
+
+  def build_top_gemfile(content)
+    FileUtils.mkdir_p '.ruby-lsp'
+    Dir.chdir '.ruby-lsp' do
+      write_file 'Gemfile', content.strip_heredoc
+    end
   end
 
   def add_gemspec_to_gemfile
